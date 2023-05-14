@@ -32,6 +32,8 @@ func handleNoBtn(c tele.Context) error {
 }
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
+
 	pref := tele.Settings{
 		Token:  os.Getenv("TELEGRAM_BOT_TOKEN"),
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
