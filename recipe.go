@@ -13,8 +13,8 @@ func (r Recipe) String() string {
 
 func GetRecipes() []Recipe {
 	return []Recipe{
-		Recipe{Title: "Maceroni ham-kaas"},
-		Recipe{Title: "Kip in de hoed"},
-		Recipe{Title: "Griekse salade"},
+		{Title: "Macaroni ham-kaas"},
+		{Title: "Kip in de hoed"},
+		{Title: "Griekse salade"},
 	}
 }
