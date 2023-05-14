@@ -39,6 +39,8 @@ func main() {
 		Poller: &tele.LongPoller{Timeout: 10 * time.Second},
 	}
 
+	setupDatabase()
+
 	b, err := tele.NewBot(pref)
 	if err != nil {
 		log.Fatal(err)
@@ -46,6 +48,8 @@ func main() {
 	}
 
 	b.Handle("/recept", func(c tele.Context) error {
+		db := GetDatabaseConnection()
+
 		// Universal markup builders.
 		selector := &tele.ReplyMarkup{}
 
@@ -60,6 +64,10 @@ func main() {
 
 		recipes := GetRecipes()
 		choice := recipes[rand.Intn(len(recipes))]
+
+		// Store the suggestion in database.
+		db.Create(&RecipeSuggestion{RecipeTitle: choice.Title, RecipeURL: choice.URL, SuggestedOn: time.Now()})
+
 		return c.Send(fmt.Sprintf("Wat dacht je van %s?", strings.ToLower(choice.Title)), selector)
 	})
 
